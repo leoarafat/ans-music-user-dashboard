@@ -1,0 +1,152 @@
+/* ---------------------------------Over View section Start--------------------------------- */
+
+.over-view-title {
+  font-family: Inter;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+.news-title,
+.news-date {
+  color: #100f14;
+  font-family: Inter;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+.news-date {
+  background-color: rgb(216, 243, 234);
+  padding: 2px;
+}
+.news-des {
+  color: #100f14;
+  font-family: Inter;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 300;
+  line-height: normal;
+  margin: 10px 0;
+}
+.regards {
+  color: #100f14;
+  font-family: Inter;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+.ans-music {
+  color: #100f14;
+  font-family: Inter;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.draf-image img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
+
+.my-blance {
+  border-radius: 5px;
+  border: 2px solid #173a27;
+  background: linear-gradient(180deg, #146b13 0%, #0b2d12 100%);
+  margin-top: 20px;
+  padding: 10px 0;
+  margin-left: auto;
+  margin-right: auto;
+  width: 70%;
+}
+.my-blance-btn {
+  color: #fff;
+  text-align: center;
+  font-family: Montserrat;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+}
+.box-1 {
+  width: 250px;
+  height: 250px;
+  background-color: rgba(60, 164, 42, 0.1);
+  border-radius: 50%;
+  text-align: center;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.box-2 {
+  width: 200px;
+  height: 200px;
+  background-color: rgba(60, 164, 42, 0.1);
+  border-radius: 50%;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.box-3 {
+  width: 150px;
+  height: 150px;
+  background-color: rgba(60, 164, 42, 0.1);
+  border-radius: 50%;
+  margin: 0 auto;
+  text-align: center;
+}
+.approved-tract-circle {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  border: 20px solid rgba(11, 81, 25, 1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+}
+.circle-text {
+  color: #100f14;
+  text-align: center;
+  font-family: Montserrat;
+  font-size: 32px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+.approved-tract-title {
+  color: #100f14;
+  font-family: Inter;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  margin-bottom: 10px;
+  justify-content: center;
+}
+.approved-tract-inner {
+  border-radius: 10px;
+  background: #f7f7ff;
+  box-shadow: 0px 4px 10px 0px rgba(0, 0, 0, 0.12);
+  padding: 20px;
+}
+
+select:focus-visible {
+  border: none;
+  outline: none;
+}
+.option-color {
+  color: #0d6c0b;
+}
+.chart-bg {
+  background: #f7f7ff;
+  padding: 10px;
+  border-radius: 5px;
+  margin: 10px;
+}
+/* ---------------------------------Over View section End--------------------------------- */

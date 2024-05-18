@@ -1,0 +1,638 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  margin: 0;
+  background-color: #ebf0f4;
+  /* background: rgb(246,245,251);
+  background: linear-gradient(43deg, rgba(246,245,251,0.7203256302521008) 0%, rgba(248,236,246,0.7511379551820728) 28%, rgba(223,241,253,0.7707457983193278) 51%, rgba(197,231,255,0.773546918767507) 63%, rgba(248,236,246,0.7819502801120448) 93%); */
+  /* background: rgb(148,187,233);
+background: radial-gradient(circle, rgba(148,187,233,0.896796218487395) 0%, rgba(238,240,248,0.9780287114845938) 100%); */
+}
+
+/* input field designe hare >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> */
+.input {
+  /* border: none; */
+  border: 1px solid rgba(92, 95, 255, 0.151);
+  box-shadow: 0px 2px 3px -3px black;
+}
+.input:focus {
+  outline: none;
+}
+input.w-full.react-datepicker-ignore-onclickoutside {
+  outline: none;
+}
+.select {
+  border: 1px solid rgba(92, 92, 255, 0.24);
+  box-shadow: 0px 2px 3px -3px black;
+}
+.select:focus {
+  outline: none;
+}
+.textarea {
+  /* border: none; */
+  border: 1px solid rgba(92, 95, 255, 0.151);
+  box-shadow: 0px 2px 3px -3px black;
+}
+.textarea:focus {
+  outline: none;
+}
+
+.navber_main_bg {
+  background-color: #ebf0f4;
+  z-index: 1;
+  /* background: rgb(246,245,251);
+  background: linear-gradient(43deg, rgba(246,245,251,0.7203256302521008) 0%, rgba(248,236,246,0.7511379551820728) 28%, rgba(223,241,253,0.7707457983193278) 51%, rgba(197,231,255,0.773546918767507) 63%, rgba(248,236,246,0.7819502801120448) 93%); */
+  /* background: rgb(148,187,233);
+background: radial-gradient(circle, rgba(148,187,233,0.896796218487395) 0%, rgba(238,240,248,0.9780287114845938) 100%); */
+}
+
+.dashboard_bg {
+  /* background-color: #EEF3F9; */
+  min-height: 100vh;
+  /* width: 100vw; */
+}
+.dash_b_left_bg {
+  width: 20%;
+  /* border-right: 1px solid black; */
+  /* background-color: tomato; */
+}
+.dash_b_right_bg {
+  width: 78%;
+  /* background-color: olive; */
+}
+
+.left_manu_ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.left_manu_ul li a {
+  font-weight: bold;
+  color: rgb(119, 119, 119);
+}
+
+.add_h_d_heater {
+  border-top-left-radius: 0.375rem;
+  border-top-right-radius: 0.375rem;
+}
+.top_title_bg {
+  background: url("../src/assets/file-upload/file-upload-bg.png");
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.modal-box {
+  max-height: calc(100vh - 5em);
+  /* width: 91.666667%; */
+  max-width: 45rem !important;
+  padding: 0px !important;
+}
+
+.verify_step_bg {
+  background: url("./assets/verification/verifitation-bg.png");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+.tab_step_bg {
+  background: url("./assets/youtube-request/tab-bg.png");
+  background-repeat: no-repeat;
+  background-position: top;
+  background-size: cover;
+}
+
+/* ---------------------------------Over View section Start--------------------------------- */
+
+.over-view-title {
+  font-family: Inter;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+.news-title,
+.news-date {
+  color: #100f14;
+  font-family: Inter;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+.news-date {
+  background-color: rgb(216, 243, 234);
+  padding: 2px;
+}
+.news-des {
+  color: #100f14;
+  font-family: Inter;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 300;
+  line-height: normal;
+  margin: 10px 0;
+}
+.regards {
+  color: #100f14;
+  font-family: Inter;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+.ans-music {
+  color: #100f14;
+  font-family: Inter;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.my-blance {
+  border-radius: 5px;
+  border: 2px solid #173a27;
+  background: linear-gradient(180deg, #146b13 0%, #0b2d12 100%);
+  margin-top: 20px;
+  padding: 10px 0;
+  margin-left: auto;
+  margin-right: auto;
+  width: 70%;
+}
+.my-blance-btn {
+  color: #fff;
+  text-align: center;
+  font-family: Montserrat;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+}
+.box-1 {
+  width: 250px;
+  height: 250px;
+  background-color: rgba(60, 164, 42, 0.1);
+  border-radius: 50%;
+  text-align: center;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.box-2 {
+  width: 200px;
+  height: 200px;
+  background-color: rgba(60, 164, 42, 0.1);
+  border-radius: 50%;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.box-3 {
+  width: 150px;
+  height: 150px;
+  background-color: rgba(60, 164, 42, 0.1);
+  border-radius: 50%;
+  margin: 0 auto;
+  text-align: center;
+}
+.approved-tract-circle {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  border: 20px solid rgba(11, 81, 25, 1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+}
+.circle-text {
+  color: #100f14;
+  text-align: center;
+  font-family: Montserrat;
+  font-size: 32px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+.approved-tract-title {
+  color: #100f14;
+  font-family: Inter;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  margin-bottom: 10px;
+  justify-content: center;
+}
+.approved-tract-inner {
+  border-radius: 10px;
+  background: #f7f7ff;
+  box-shadow: 0px 4px 10px 0px rgba(0, 0, 0, 0.12);
+  padding: 20px;
+}
+
+select:focus-visible {
+  border: none;
+  outline: none;
+}
+.option-color {
+  color: #0d6c0b;
+}
+.chart-bg {
+  background: #f7f7ff;
+  padding: 10px;
+  border-radius: 5px;
+  margin: 10px;
+}
+/* ---------------------------------Over View section End--------------------------------- */
+
+/* ---------------------------------Tab Section Start--------------------------------- */
+.navbar {
+  height: auto;
+  width: 100%;
+  /* background: #308d46; */
+}
+
+.navbar ul {
+  display: flex;
+  list-style-type: none;
+  margin-block-start: 1em;
+  margin-block-end: 1em;
+  margin: 0;
+  padding-left: 40px;
+}
+.navbar ul li {
+  display: inline;
+  list-style: none;
+  padding: 10px 30px;
+  font-size: 1rem;
+  border-radius: 5px;
+  position: relative;
+}
+
+.navbar ul li.active {
+  background: #ebf0f4;
+  margin-top: 10px;
+}
+
+.navbar ul li a {
+  text-decoration: none;
+  color: #64748b;
+  font-family: Inter;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 160%; /* 22.4px */
+}
+
+.navbar ul li.active a {
+  /* color: #308d46; */
+  color: #0d6c0b;
+  font-family: Inter;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 160%; /* 22.4px */
+}
+
+li.active a::before {
+  content: "";
+  left: -30px;
+  bottom: 0;
+  height: 30px;
+  width: 30px;
+  position: absolute;
+  /* background: #308d46; */
+  border-radius: 50%;
+  box-shadow: 15px 15px 0 #ebf0f4;
+}
+li.active a::after {
+  content: "";
+  right: -30px;
+  bottom: 0;
+  height: 30px;
+  width: 30px;
+  position: absolute;
+  /* background: #308d46; */
+  border-radius: 50%;
+  box-shadow: -15px 15px 0 #ebf0f4;
+}
+.tab-margin-top {
+  background-color: white;
+  margin-top: 30px;
+  padding: 30px;
+}
+.my-uploading-heading {
+  color: #100f14;
+  font-family: Inter;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 125%; /* 30px */
+  letter-spacing: 0.2px;
+  text-transform: uppercase;
+  margin-top: 30px;
+}
+.album-name {
+  color: #100f14;
+  font-family: Inter;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 140%; /* 25.2px */
+  letter-spacing: 0.2px;
+}
+.value-color-data {
+  color: #989898;
+  font-family: Inter;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 100%; /* 16px */
+}
+.tab-data {
+  border-radius: 8px;
+  background: #fff;
+  box-shadow: 0 0 5px gainsboro;
+  /* padding: 20px; */
+}
+.album-data-heading {
+  color: #b0b7c3;
+  font-family: Inter;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 160%; /* 22.4px */
+}
+.album-data-value {
+  color: #100f14;
+  font-family: Inter;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 140%; /* 19.6px */
+  letter-spacing: 0.2px;
+}
+.uploading-filter {
+  display: flex;
+  justify-content: end;
+  align-items: center;
+}
+.filter-box {
+  display: inline-flex;
+  height: 48px;
+  padding: 12px 16px;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+}
+.view-box {
+  position: absolute;
+  background: black;
+  color: white;
+  padding: 10px 30px;
+  bottom: 0;
+  cursor: pointer;
+}
+.box {
+  background: black;
+  width: 10px;
+  height: 10px;
+  position: absolute;
+  top: -5px;
+  right: 2px;
+  transform: rotate(45deg);
+}
+.view-box-1 {
+  position: absolute;
+  background: black;
+  color: white;
+  padding: 10px 30px;
+  top: 75px;
+  cursor: pointer;
+}
+.view-box-2 {
+  position: absolute;
+  background: black;
+  color: white;
+  padding: 10px 30px;
+  top: 75px;
+  cursor: pointer;
+}
+/* ---------------------------------Tab section End--------------------------------- */
+/* ---------------------------------Manage Section Start--------------------------------- */
+.checkbox-width {
+  width: 20px;
+  height: 20px;
+  margin-right: 10px;
+  border-radius: 5px;
+}
+.text-color {
+  color: #989898;
+  font-weight: 500;
+}
+/* ---------------------------------Manage Section End--------------------------------- */
+
+/* ---------------------------------Financial Section Start--------------------------------- */
+
+.request-buton {
+  background-color: #eaeaea;
+  padding: 8px 15px;
+  border-radius: 5px;
+}
+.resust-submit-btn {
+  background-color: #fff;
+  box-shadow: 0 0 5px gray;
+  padding: 10px 20px;
+  margin-left: 15px;
+  border-radius: 5px;
+}
+.minimum-balance {
+  color: #7b7b7b;
+  font-size: 12px;
+}
+.six-month {
+  color: #100f14;
+  font-weight: 700;
+  font-size: 20px;
+}
+.download-btn-color {
+  color: green;
+}
+.request-label,
+.six-mon-label {
+  color: #7b7b7b;
+}
+/* ---------------------------------Financial Section End--------------------------------- */
+/* ---------------------------------My Profile Section Start--------------------------------- */
+.profile-image img {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+}
+.profile-form input {
+  background-color: #f7fef8;
+}
+.change-number-profile {
+  position: absolute;
+  right: 19%;
+  top: 50%;
+  transform: translate(50%, -50%);
+  cursor: pointer;
+}
+.custom-input-border-left {
+  border-top-left-radius: inherit;
+  border-bottom-left-radius: inherit;
+}
+.profile-save-btn {
+  background: #f7f7ff;
+  height: 50px;
+  margin-top: 22px;
+  border-radius: 5px;
+  font-size: 25px;
+  font-weight: 600;
+}
+.profile-save-btn:hover {
+  background-color: #0d6c0b;
+  color: white;
+}
+.about-profile-custom {
+  background-color: #f0f0fc;
+  padding: 10px;
+  border-radius: 5px;
+  margin-bottom: 10px;
+}
+.about-profile-title {
+  font-weight: 500;
+  font-size: 16px;
+  color: black;
+}
+.about-profile-value {
+  color: #aeaeb3;
+  font-weight: 400;
+}
+.about-profile-values {
+  color: blue;
+  font-weight: 400;
+}
+.gov-id-upload {
+  background: #c9c9ce;
+  padding: 10px;
+  font-size: 20px;
+  font-weight: 600;
+  border-radius: 5px;
+}
+/* ---------------------------------My Profile Section End--------------------------------- */
+/* ---------------------------------Pass Change Section Start--------------------------------- */
+
+.pass-change-form {
+  width: 38%;
+  margin: auto;
+  background: #f2f1f1;
+  padding: 30px;
+}
+.pass-change-btn {
+  background: #0b5119;
+  color: white;
+  padding: 10px 30px;
+  margin-top: 20px;
+  border-radius: 5px;
+}
+
+/* ---------------------------------Pass Change Section End--------------------------------- */
+/* ---------------------------------Analitics Section Start--------------------------------- */
+.filter-btn {
+  background-color: #8bc34a;
+  color: white;
+  padding: 10px 40px;
+  border-radius: 5px;
+}
+.analytics-main {
+  width: 100%;
+  max-height: 500px !important;
+  background-color: white;
+  margin-top: 30px;
+  border-radius: 5px;
+  padding: 50px;
+}
+.analytics-inner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.apx-legend-position-right {
+  justify-content: center !important;
+}
+.apexcharts-legend-series {
+  margin: 10px !important;
+}
+.apexcharts-legend-text {
+  font-size: 15px !important;
+}
+/* ---------------------------------Analitics Section End--------------------------------- */
+/*============================Author Data section start======================= */
+.add-another-btn {
+  background-color: black;
+  color: white;
+  padding: 5px 15px;
+  border-radius: 5px;
+}
+/*============================Author Data section end======================= */
+
+/*============================Album Data section start======================= */
+.album-upload-main{
+  background: linear-gradient(180deg, #F8FAFC 0%, rgba(248, 250, 252, 0) 100%);
+  padding: 20px;
+  margin: 20px;
+}
+.jpg-should{
+  font-size: 10px;
+}
+.upload-cover-photo{
+  background-color: white;
+  width: 150px;
+  height: 150px;
+}
+.track-list{
+  background-color: rgb(227, 229, 230);
+  padding: 10px;
+}
+/*============================Album Data section end======================= */
+
+/* ===================Artist Create Modal================================== */
+.create-artist-modal {
+  background: white;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1;
+  box-shadow: 0 0 5px gainsboro;
+  width: 40%;
+}
+.artist-modal-save,.artist-modal-cancel{
+  background-color: #0b5119;
+  width: 40%;
+  margin: 20px;
+  padding: 10px 0;
+  color: white;
+  border-radius: 5px;
+} 
+ .artist-create{
+  width: 100%;
+    padding: 5px;
+    box-shadow: 0 0 5px gainsboro;
+    margin-top: 20px;
+}
+/* ===================Artist Create Modal================================== */
