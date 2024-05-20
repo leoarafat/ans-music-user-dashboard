@@ -1,10 +1,14 @@
-import React, { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import BASEURL from "../../../../Constants";
 import axios from "axios";
 import toast from "react-hot-toast";
+import { ProfileDataContext } from "../../../context/ProfileDataProvider";
+import { LabelDataContext } from "../../../context/LabelProvider";
 
 const AgreementSignin = () => {
+  const { profileImages } = useContext(ProfileDataContext);
+  const { labelImages } = useContext(LabelDataContext);
   const [profileData, setProfileData] = useState(null);
   const [labelData, setLabelData] = useState(null);
   const [selectedProfileImage, setSelectedProfileImage] = useState(null);
@@ -15,7 +19,7 @@ const AgreementSignin = () => {
   const id = localStorage.getItem("user_id");
   const navigate = useNavigate();
   const formData = new FormData();
-
+  console.log(profileImages, "Arafat");
   useEffect(() => {
     // Retrieve profileData from localStorage
     const storedProfileDataString = localStorage.getItem("profileData");
@@ -79,18 +83,11 @@ const AgreementSignin = () => {
         );
     }
   }, []);
-  console.log(profileData);
+
   // ======================================================
   //          Finally Submit All data here
   // ======================================================
   const handleAgreementDone = async () => {
-    // const imagedata = {
-    //   selectedProfileImage,
-    //   selectedNidFront,
-    //   selectedNidBack,
-    //   selectedNoticeImage,
-    //   selectedDashboardImage,
-    // };
     const data = {
       name: profileData?.name,
       phoneNumber: profileData?.number,
@@ -103,26 +100,28 @@ const AgreementSignin = () => {
       channelUrl: labelData?.url,
       subscribeCount: labelData?.totalSub,
       videosCount: 50,
-      copyrightNotice: "Copyright © 2024 John Doe",
-      // balance: 0,
+      copyrightNotice: "Copyright © 2024 ANS Music",
     };
     if (selectedProfileImage) {
-      formData.append("image", selectedProfileImage);
+      formData.append("image", profileImages?.selectedProfileImage);
     }
     if (selectedNidFront) {
-      formData.append("nidFront", selectedNidFront);
+      formData.append("nidFront", profileImages?.selectedNidFront);
     }
     if (selectedNidBack) {
-      formData.append("nidBack", selectedNidBack);
+      formData.append("nidBack", profileImages?.selectedNidBack);
     }
     if (selectedDashboardImage) {
-      formData.append("dashboardScreenShot", selectedDashboardImage);
+      formData.append(
+        "dashboardScreenShot",
+        labelImages?.selectedDashboardImage
+      );
     }
     if (selectedNoticeImage) {
-      formData.append("copyrightNoticeImage", selectedNoticeImage);
+      formData.append("copyrightNoticeImage", labelImages?.selectedNoticeImage);
     }
     formData.append("data", JSON.stringify(data));
-
+    // console.log(profileImages, "profileImages");
     try {
       const response = await axios.patch(
         `${BASEURL}/user/verify-profile/${id}`,
@@ -133,7 +132,7 @@ const AgreementSignin = () => {
           },
         }
       );
-      console.log(response.data);
+
       toast.success(`${response.data.message}`);
       if (response.data.data.isVerified) {
         localStorage.setItem("isVerified", response.data.data.isVerified);
@@ -154,21 +153,8 @@ const AgreementSignin = () => {
       toast.error(`${error.response.data.message}`);
       throw new Error(error.response.data.message);
     }
-
-    // Remove profileData from localStorage
-    // localStorage.removeItem("profileData");
-    // localStorage.removeItem("labelData");
-    // localStorage.removeItem("activeTab");
-    // localStorage.removeItem("selectedProfileImage");
-    // localStorage.removeItem("selectedNidFront");
-    // localStorage.removeItem("selectedNidBack");
-    // localStorage.removeItem("selectedNoticeImage");
-    // localStorage.removeItem("selectedDashboardImage");
-    // localStorage.setItem("verified", true);
-    // navigate("/");
   };
 
-  console.log(selectedProfileImage);
   return (
     <div className="p-5 bg-white shadow-md rounded-md">
       <div className="label_box text-sm font-semibold">
@@ -204,7 +190,7 @@ const AgreementSignin = () => {
             <p>{profileData?.address ? `${profileData?.address}` : "N/A"}</p>
             <p>{profileData?.city ? `${profileData?.city}` : "N/A"}</p>
             <p>{profileData?.state ? `${profileData?.state}` : "N/A"}</p>
-            <p>{profileData?.county ? `${profileData?.county}` : "N/A"}</p>
+            <p>{profileData?.country ? `${profileData?.country}` : "N/A"}</p>
             <p>{profileData?.postCode ? `${profileData?.postCode}` : "N/A"}</p>
           </div>
         </div>

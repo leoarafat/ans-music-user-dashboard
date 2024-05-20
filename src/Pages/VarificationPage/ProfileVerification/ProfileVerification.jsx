@@ -1,22 +1,26 @@
 import React, { useContext, useEffect, useState } from "react";
 import { MdOutlineFileUpload, MdClose } from "react-icons/md";
 import { AuthContext } from "../../../context/AuthProvider";
+import { ProfileDataContext } from "../../../context/ProfileDataProvider";
 
 const ProfileVerification = ({ handleTabChange }) => {
-  const {userData} = useContext(AuthContext)
+  const { userData } = useContext(AuthContext);
+  const { updateProfileImages, profileImages } = useContext(ProfileDataContext);
   const [selectedProfileImage, setSelectedProfileImage] = useState(null);
   const [selectedNidFront, setSelectedNidFront] = useState(null);
   const [selectedNidBack, setSelectedNidBack] = useState(null);
   const storedProfileDataString = localStorage.getItem("profileData");
   const storedProfileData = JSON.parse(storedProfileDataString);
-// console.log(userData);
+  // console.log(userData);
   useEffect(() => {
     // Retrieve selectedProfileImage from localStorage
     const profileImageURL = localStorage.getItem("selectedProfileImage");
     if (profileImageURL) {
       fetch(profileImageURL)
         .then((res) => res.blob())
-        .then((blob) => setSelectedProfileImage(new File([blob], "profileImage")));
+        .then((blob) =>
+          setSelectedProfileImage(new File([blob], "profileImage"))
+        );
     }
 
     // Retrieve selectedNidFront from localStorage
@@ -65,7 +69,6 @@ const ProfileVerification = ({ handleTabChange }) => {
     localStorage.removeItem("selectedNidBack");
   };
 
-
   // This is main Funtion redirect for this page ================
 
   const handleProfileVerify = (e) => {
@@ -81,9 +84,9 @@ const ProfileVerification = ({ handleTabChange }) => {
     const postCode = form.post_code.value;
 
     const profileData = {
-      profileImg: selectedProfileImage,
-      NidFront: selectedNidFront,
-      NidBack: selectedNidBack,
+      // profileImg: selectedProfileImage,
+      // NidFront: selectedNidFront,
+      // NidBack: selectedNidBack,
       name,
       email,
       number,
@@ -98,11 +101,15 @@ const ProfileVerification = ({ handleTabChange }) => {
 
     // Save profileData to localStorage
     localStorage.setItem("profileData", profileDataString);
+    updateProfileImages({
+      selectedProfileImage,
+      selectedNidFront,
+      selectedNidBack,
+    });
 
     handleTabChange(2);
   };
-
-// console.log(selectedProfileImage);
+  // console.log(selectedProfileImage);
   return (
     <div className="mt-2">
       <form
@@ -139,6 +146,7 @@ const ProfileVerification = ({ handleTabChange }) => {
                   id="file-upload"
                   type="file"
                   accept="image/*"
+                  name="image"
                   style={{ display: "none" }}
                   onChange={handleProfileImageUpload}
                 />
@@ -149,9 +157,7 @@ const ProfileVerification = ({ handleTabChange }) => {
 
           {/* Upload user NID Front  */}
           <div className="image_upload flex items-center justify-center flex-col">
-            <h4 className="mb-2 text-sm font-semibold">
-              Upload Profile picture
-            </h4>
+            <h4 className="mb-2 text-sm font-semibold">Upload Nid Front</h4>
             {selectedNidFront ? (
               <div className="relative w-3/4">
                 <img
@@ -175,6 +181,7 @@ const ProfileVerification = ({ handleTabChange }) => {
                   id="nid-front"
                   type="file"
                   accept="image/*"
+                  name="nidFront"
                   style={{ display: "none" }}
                   onChange={handleNidFrontUpload}
                 />
@@ -184,9 +191,7 @@ const ProfileVerification = ({ handleTabChange }) => {
           </div>
           {/* Upload user Nid Back  */}
           <div className="image_upload flex items-center justify-center flex-col">
-            <h4 className="mb-2 text-sm font-semibold">
-              Upload Profile picture
-            </h4>
+            <h4 className="mb-2 text-sm font-semibold">Upload Nid Back</h4>
             {selectedNidBack ? (
               <div className="relative w-3/4">
                 <img
@@ -210,6 +215,7 @@ const ProfileVerification = ({ handleTabChange }) => {
                   id="nid-back"
                   type="file"
                   accept="image/*"
+                  name="nidBack"
                   style={{ display: "none" }}
                   onChange={handleNidBackUpload}
                 />
@@ -223,7 +229,11 @@ const ProfileVerification = ({ handleTabChange }) => {
             <span className="text-sm font-semibold mb-2">Name</span>
             <input
               name="name"
-              defaultValue={storedProfileData?.name ? storedProfileData?.name : userData?.data?.name}
+              defaultValue={
+                storedProfileData?.name
+                  ? storedProfileData?.name
+                  : userData?.data?.name
+              }
               type="text"
               placeholder="Enter name"
               className="input  w-full bg-[#F7FEF8]"
@@ -269,13 +279,19 @@ const ProfileVerification = ({ handleTabChange }) => {
             <span className="text-sm font-semibold mb-2">
               State <span className="text-red-500">*</span>
             </span>
-            <select name="state" className="select  w-full bg-[#F7FEF8]">
+            {/* <select name="state" className="select  w-full bg-[#F7FEF8]">
               <option disabled selected>
                 select state
               </option>
               <option>India</option>
               <option>USA</option>
-            </select>
+            </select> */}
+            <input
+              type="text"
+              className="input  w-full bg-[#F7FEF8]"
+              name="state"
+              id=""
+            />
           </label>
           <label className="form-control w-full">
             <span className="text-sm font-semibold mb-2">
@@ -329,6 +345,7 @@ const ProfileVerification = ({ handleTabChange }) => {
           </div>
         </div>
       </form>
+      <div className="hidden"></div>
     </div>
   );
 };

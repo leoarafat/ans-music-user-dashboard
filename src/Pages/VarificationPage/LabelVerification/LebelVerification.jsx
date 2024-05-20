@@ -1,12 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { MdOutlineFileUpload, MdClose } from "react-icons/md";
 
+import { LabelDataContext } from "../../../context/LabelProvider";
+
 const LebelVerification = ({ handleTabChange }) => {
+  const { updateLabelImages } = useContext(LabelDataContext);
   const [selectedNoticeImage, setSelectedNoticeImage] = useState(null);
   const [selectedDashboardImage, setSelectedDashboardImage] = useState(null);
   const storedLabelDataDataString = localStorage.getItem("labelData");
   const storedLabelData = JSON.parse(storedLabelDataDataString);
-
 
   useEffect(() => {
     // Retrieve selectedNoticeImage from localStorage
@@ -14,15 +16,21 @@ const LebelVerification = ({ handleTabChange }) => {
     if (selectedNoticeImageURL) {
       fetch(selectedNoticeImageURL)
         .then((res) => res.blob())
-        .then((blob) => setSelectedNoticeImage(new File([blob], "selectedNoticeImage")));
+        .then((blob) =>
+          setSelectedNoticeImage(new File([blob], "selectedNoticeImage"))
+        );
     }
 
     // Retrieve selectedDashboardImage from localStorage
-    const selectedDashboardImageURL = localStorage.getItem("selectedDashboardImage");
+    const selectedDashboardImageURL = localStorage.getItem(
+      "selectedDashboardImage"
+    );
     if (selectedDashboardImageURL) {
       fetch(selectedDashboardImageURL)
         .then((res) => res.blob())
-        .then((blob) => setSelectedDashboardImage(new File([blob], "selectedDashboardImage")));
+        .then((blob) =>
+          setSelectedDashboardImage(new File([blob], "selectedDashboardImage"))
+        );
     }
   }, []);
 
@@ -59,13 +67,16 @@ const LebelVerification = ({ handleTabChange }) => {
       url,
       totalSub,
     };
-       // Convert labelData to JSON string
-       const labelDataString = JSON.stringify(labelData);
+    // Convert labelData to JSON string
+    const labelDataString = JSON.stringify(labelData);
 
-       // Save labelData to localStorage
-       localStorage.setItem("labelData", labelDataString);
-
-    handleTabChange(3)
+    // Save labelData to localStorage
+    localStorage.setItem("labelData", labelDataString);
+    updateLabelImages({
+      selectedDashboardImage,
+      selectedNoticeImage,
+    });
+    handleTabChange(3);
   };
 
   // console.log(storedLabelData);
@@ -133,14 +144,15 @@ const LebelVerification = ({ handleTabChange }) => {
               </div>
             ) : (
               <label
-                htmlFor="file-upload"
+                htmlFor="copyright-image"
                 className="upload w-full hover:bg-green-100 transition flex justify-center shadow-md rounded-md p-12 text-5xl cursor-pointer"
               >
                 <input
-                  id="file-upload"
+                  id="copyright-image"
                   type="file"
                   accept="image/*"
                   style={{ display: "none" }}
+                  name="copyrightNoticeImage"
                   onChange={handleselectedNoticeImageUpload}
                 />
                 <MdOutlineFileUpload />
@@ -167,13 +179,14 @@ const LebelVerification = ({ handleTabChange }) => {
               </div>
             ) : (
               <label
-                htmlFor="nid-front"
+                htmlFor="dashboard-screenshot"
                 className="upload w-full hover:bg-green-100 transition flex justify-center shadow-md rounded-md p-12 text-5xl cursor-pointer"
               >
                 <input
-                  id="nid-front"
+                  id="dashboard-screenshot"
                   type="file"
                   accept="image/*"
+                  name="dashboardScreenShot"
                   style={{ display: "none" }}
                   onChange={handleNidFrontUpload}
                 />
