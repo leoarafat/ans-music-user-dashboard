@@ -96,6 +96,7 @@ const LebelVerification = ({ handleTabChange }) => {
               type="text"
               placeholder="Enter Channel name"
               className="input  w-full bg-[#F7FEF8]"
+              required
             />
           </label>
           <label className="form-control w-full">
@@ -106,6 +107,7 @@ const LebelVerification = ({ handleTabChange }) => {
               type="url"
               placeholder="Enter Channel URL"
               className="input  w-full bg-[#F7FEF8]"
+              required
             />
           </label>
           <label className="form-control w-full">
@@ -116,6 +118,7 @@ const LebelVerification = ({ handleTabChange }) => {
               type="number"
               placeholder="Total Subscriber"
               className="input  w-full bg-[#F7FEF8]"
+              required
             />
           </label>
         </div>

@@ -5,13 +5,14 @@ import { ProfileDataContext } from "../../../context/ProfileDataProvider";
 
 const ProfileVerification = ({ handleTabChange }) => {
   const { userData } = useContext(AuthContext);
-  const { updateProfileImages, profileImages } = useContext(ProfileDataContext);
+  const { updateProfileImages } = useContext(ProfileDataContext);
   const [selectedProfileImage, setSelectedProfileImage] = useState(null);
   const [selectedNidFront, setSelectedNidFront] = useState(null);
   const [selectedNidBack, setSelectedNidBack] = useState(null);
   const storedProfileDataString = localStorage.getItem("profileData");
   const storedProfileData = JSON.parse(storedProfileDataString);
-  // console.log(userData);
+  const [imageError, setImageError] = useState(false);
+
   useEffect(() => {
     // Retrieve selectedProfileImage from localStorage
     const profileImageURL = localStorage.getItem("selectedProfileImage");
@@ -44,35 +45,46 @@ const ProfileVerification = ({ handleTabChange }) => {
     const file = event.target.files[0];
     setSelectedProfileImage(file);
     localStorage.setItem("selectedProfileImage", URL.createObjectURL(file));
+    setImageError(true);
   };
+
   const handleNidFrontUpload = (event) => {
     const file = event.target.files[0];
     setSelectedNidFront(file);
     localStorage.setItem("selectedNidFront", URL.createObjectURL(file));
+    setImageError(true);
   };
+
   const handleNidBackUpload = (event) => {
     const file = event.target.files[0];
     setSelectedNidBack(file);
     localStorage.setItem("selectedNidBack", URL.createObjectURL(file));
+    setImageError(true);
   };
 
   const handleProfileRemoveImage = () => {
     setSelectedProfileImage(null);
     localStorage.removeItem("selectedProfileImage");
   };
+
   const handleNidFrontRemove = () => {
     setSelectedNidFront(null);
     localStorage.removeItem("selectedNidFront");
   };
+
   const handleNidBackRemove = () => {
     setSelectedNidBack(null);
     localStorage.removeItem("selectedNidBack");
   };
 
-  // This is main Funtion redirect for this page ================
-
   const handleProfileVerify = (e) => {
     e.preventDefault();
+
+    if (!selectedProfileImage || !selectedNidFront || !selectedNidBack) {
+      setImageError(false);
+      return;
+    }
+
     const form = e.target;
     const name = form.name.value;
     const email = form.email.value;
@@ -84,9 +96,6 @@ const ProfileVerification = ({ handleTabChange }) => {
     const postCode = form.post_code.value;
 
     const profileData = {
-      // profileImg: selectedProfileImage,
-      // NidFront: selectedNidFront,
-      // NidBack: selectedNidBack,
       name,
       email,
       number,
@@ -96,20 +105,20 @@ const ProfileVerification = ({ handleTabChange }) => {
       address,
       postCode,
     };
-    // Convert profileData to JSON string
-    const profileDataString = JSON.stringify(profileData);
 
-    // Save profileData to localStorage
+    const profileDataString = JSON.stringify(profileData);
     localStorage.setItem("profileData", profileDataString);
+
     updateProfileImages({
       selectedProfileImage,
       selectedNidFront,
       selectedNidBack,
     });
 
+    setImageError(true);
     handleTabChange(2);
   };
-  // console.log(selectedProfileImage);
+  console.log(imageError);
   return (
     <div className="mt-2">
       <form
@@ -140,7 +149,9 @@ const ProfileVerification = ({ handleTabChange }) => {
             ) : (
               <label
                 htmlFor="file-upload"
-                className="upload w-3/4 hover:bg-green-100 transition flex justify-center shadow-md rounded-md p-12 text-5xl cursor-pointer"
+                className={`upload w-3/4 hover:bg-green-100 transition flex justify-center shadow-md rounded-md p-12 text-5xl cursor-pointer ${
+                  imageError && "border-red-500"
+                }`}
               >
                 <input
                   id="file-upload"
@@ -149,9 +160,15 @@ const ProfileVerification = ({ handleTabChange }) => {
                   name="image"
                   style={{ display: "none" }}
                   onChange={handleProfileImageUpload}
+                  required
                 />
                 <MdOutlineFileUpload />
               </label>
+            )}
+            {!imageError && (
+              <p className="text-red-500 text-sm mt-1">
+                Profile picture is required.
+              </p>
             )}
           </div>
 
@@ -184,9 +201,15 @@ const ProfileVerification = ({ handleTabChange }) => {
                   name="nidFront"
                   style={{ display: "none" }}
                   onChange={handleNidFrontUpload}
+                  required
                 />
                 <MdOutlineFileUpload />
               </label>
+            )}
+            {!imageError && (
+              <p className="text-red-500 text-sm mt-1">
+                Nid front is required.
+              </p>
             )}
           </div>
           {/* Upload user Nid Back  */}
@@ -218,9 +241,13 @@ const ProfileVerification = ({ handleTabChange }) => {
                   name="nidBack"
                   style={{ display: "none" }}
                   onChange={handleNidBackUpload}
+                  required
                 />
                 <MdOutlineFileUpload />
               </label>
+            )}
+            {!imageError && (
+              <p className="text-red-500 text-sm mt-1">Nid Back is required.</p>
             )}
           </div>
         </div>
@@ -236,6 +263,7 @@ const ProfileVerification = ({ handleTabChange }) => {
               }
               type="text"
               placeholder="Enter name"
+              required
               className="input  w-full bg-[#F7FEF8]"
             />
           </label>
@@ -247,6 +275,7 @@ const ProfileVerification = ({ handleTabChange }) => {
               type="text"
               placeholder="Enter Phone number"
               className="input  w-full bg-[#F7FEF8]"
+              required
             />
           </label>
           <label className="form-control w-full">
@@ -267,7 +296,11 @@ const ProfileVerification = ({ handleTabChange }) => {
             <span className="text-sm font-semibold mb-2">
               County <span className="text-red-500">*</span>
             </span>
-            <select name="county" className="select  w-full bg-[#F7FEF8]">
+            <select
+              required
+              name="county"
+              className="select  w-full bg-[#F7FEF8]"
+            >
               <option disabled selected>
                 Bangladesh
               </option>
@@ -291,6 +324,7 @@ const ProfileVerification = ({ handleTabChange }) => {
               className="input  w-full bg-[#F7FEF8]"
               name="state"
               id=""
+              required
             />
           </label>
           <label className="form-control w-full">
@@ -303,6 +337,7 @@ const ProfileVerification = ({ handleTabChange }) => {
               type="text"
               placeholder="Enter city"
               className="input  w-full bg-[#F7FEF8]"
+              required
             />
           </label>
           <label className="form-control w-full">
@@ -315,6 +350,7 @@ const ProfileVerification = ({ handleTabChange }) => {
               type="text"
               placeholder="Enter Post Code"
               className="input  w-full bg-[#F7FEF8]"
+              required
             />
           </label>
           <label className="form-control w-full">
@@ -327,6 +363,7 @@ const ProfileVerification = ({ handleTabChange }) => {
               type="text"
               placeholder="Enter Address"
               className="input  w-full bg-[#F7FEF8]"
+              required
             />
           </label>
           <div className="button flex justify-end items-end">

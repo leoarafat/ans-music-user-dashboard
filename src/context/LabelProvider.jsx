@@ -13,8 +13,14 @@ export const LabelDataProvider = ({ children }) => {
     setLabelData(data);
   };
 
+  // const updateLabelImages = (images) => {
+  //   setLabelImages(images);
+  // };
   const updateLabelImages = (images) => {
-    setLabelImages(images);
+    setLabelImages((prevImages) => ({
+      ...prevImages,
+      ...images,
+    }));
   };
 
   return (

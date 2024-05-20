@@ -1,19 +1,17 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import logo from "../../assets/logo/logo-main.png";
 import axios from "axios";
-import { useQuery } from "@tanstack/react-query";
 import BASEURL from "../../../Constants";
 import toast from "react-hot-toast";
-const Profile = ({profileData}) => {
+const Profile = ({ profileData }) => {
   const [formData, setFormData] = useState({
-    name: profileData.name,
-    email: profileData.email,
-    address: profileData.address,
-    phoneNumber: profileData.phoneNumber,
+    name: profileData?.name,
+    email: profileData?.email,
+    address: profileData?.address,
+    phoneNumber: profileData?.phoneNumber,
   });
   const id = localStorage.getItem("user_id");
 
-    console.log(profileData)
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData({
@@ -31,32 +29,29 @@ const Profile = ({profileData}) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-      const formDataToSend = new FormData();
-      // formDataToSend.append("name", formData.name);
-      // formDataToSend.append("username", formData.username);
-      // formDataToSend.append("email", formData.email);
-      // formDataToSend.append("address", formData.address);
-      // formDataToSend.append("phoneNumber", formData.phoneNumber);
-      // formDataToSend.append("profileImage", formData.profileImage);
-const data = {
-  name: formData.name,
-  email: formData.email,
-  phoneNumber: formData.phoneNumber,
-  address: formData.address,
-}
-formDataToSend.append("data",  JSON.stringify(data));
-// if(formData.profileImage){
-//   formDataToSend.append("image", formData.profileImage);
-// }
-     try {
-      const response = await axios.patch(`${BASEURL}/user/edit-profile/${id}`, formDataToSend,
-      {
-        headers: {
-          // Accept: "application/json",
-          // "Content-Type": "application/json",
-          Authorization: localStorage.getItem("token"),
-        },
-      }
+    const formDataToSend = new FormData();
+
+    const data = {
+      name: formData?.name,
+      email: formData?.email,
+      phoneNumber: formData?.phoneNumber,
+      address: formData?.address,
+    };
+    formDataToSend.append("data", JSON.stringify(data));
+    if (formData.profileImage) {
+      formDataToSend.append("image", formData.profileImage);
+    }
+    try {
+      const response = await axios.patch(
+        `${BASEURL}/user/edit-profile/${id}`,
+        formDataToSend,
+        {
+          headers: {
+            // Accept: "application/json",
+            // "Content-Type": "application/json",
+            Authorization: localStorage.getItem("token"),
+          },
+        }
       );
       toast.success(`${response.data.message}`, {
         position: "top-center",
@@ -68,7 +63,7 @@ formDataToSend.append("data",  JSON.stringify(data));
         progress: undefined,
         theme: "light",
       });
-      console.log(response.data)
+      console.log(response.data);
       return response.data;
     } catch (error) {
       toast.error(`${error.response.data.message}`, {
@@ -86,15 +81,15 @@ formDataToSend.append("data",  JSON.stringify(data));
       throw new Error(error.response.data.message);
     }
   };
-
+  console.log(formData);
   return (
     <div className="bg-white p-5 m-5 grid grid-cols-5 gap-5">
       <div className="profile-image col-span-1">
         <label htmlFor="profile-image-upload" className="cursor-pointer">
           <img
             src={
-              formData.profileImage
-                ? URL.createObjectURL(formData.profileImage)
+              formData?.profileImage
+                ? URL.createObjectURL(formData?.profileImage)
                 : logo
             }
             alt="Profile"
@@ -117,7 +112,7 @@ formDataToSend.append("data",  JSON.stringify(data));
             <input
               type="text"
               name="name"
-              value={formData.name}
+              value={formData?.name}
               placeholder="Type here"
               className="input input-bordered w-full"
               onChange={handleInputChange}
@@ -130,7 +125,7 @@ formDataToSend.append("data",  JSON.stringify(data));
             <input
               type="email"
               name="email"
-              value={formData.email}
+              value={formData?.email}
               placeholder="Type here"
               className="input input-bordered w-full"
               onChange={handleInputChange}
@@ -143,7 +138,7 @@ formDataToSend.append("data",  JSON.stringify(data));
             <input
               type="text"
               name="address"
-              value={formData.address}
+              value={formData?.address}
               placeholder="Type here"
               className="input input-bordered w-full"
               onChange={handleInputChange}
@@ -156,14 +151,17 @@ formDataToSend.append("data",  JSON.stringify(data));
             <input
               type="tel"
               name="phoneNumber"
-              value={formData.phoneNumber}
+              value={formData?.phoneNumber}
               placeholder="Type here"
               className="input input-bordered w-full"
               onChange={handleInputChange}
             />
           </div>
 
-          <button type="submit" className="profile-save-btn  btn btn-outline btn-success">
+          <button
+            type="submit"
+            className="profile-save-btn  btn btn-outline btn-success"
+          >
             Save
           </button>
         </form>

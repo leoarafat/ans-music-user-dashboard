@@ -8,18 +8,21 @@ export const ProfileDataProvider = ({ children }) => {
     selectedProfileImage: null,
     selectedNidFront: null,
     selectedNidBack: null,
-    selectedDashboardImage: null,
-    selectedNoticeImage: null,
   });
 
   const updateProfileData = (data) => {
     setProfileData(data);
   };
 
+  // const updateProfileImages = (images) => {
+  //   setProfileImages(images);
+  // };
   const updateProfileImages = (images) => {
-    setProfileImages(images);
+    setProfileImages((prevImages) => ({
+      ...prevImages,
+      ...images,
+    }));
   };
-
   return (
     <ProfileDataContext.Provider
       value={{

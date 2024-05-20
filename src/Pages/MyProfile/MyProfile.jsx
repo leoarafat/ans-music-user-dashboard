@@ -5,11 +5,11 @@ import { IoMusicalNotesOutline } from "react-icons/io5";
 import Profile from "./Profile";
 import AboutProfile from "./AboutProfile";
 import EditProfile from "./EditProfile";
-import EditDetails from "./EditDetails";
+
 import BASEURL from "../../../Constants";
 import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
-import toast from "react-hot-toast";
+
 const MyProfile = () => {
   const [activeTab, setActiveTab] = useState(1);
   const id = localStorage.getItem("user_id");
@@ -28,13 +28,13 @@ const MyProfile = () => {
         });
         return response.data;
       } catch (error) {
-        setAuthenticated(error?.response?.data?.message);
+        // setAuthenticated(error?.response?.data?.message);
         console.log("Respons:", error?.response?.data?.message);
         throw error;
       }
     },
   });
-    // console.log(profileData)
+  // console.log(profileData)
   const handleTabChange = (tabNumber) => {
     setActiveTab(tabNumber);
   };
@@ -100,8 +100,12 @@ const MyProfile = () => {
       </div>
       <div className="">
         {activeTab === 1 && <Profile profileData={profileData?.data}></Profile>}
-        {activeTab === 2 && <AboutProfile profileData={profileData?.data}></AboutProfile>}
-        {activeTab === 3 && <EditProfile profileData={profileData?.data}></EditProfile>}
+        {activeTab === 2 && (
+          <AboutProfile profileData={profileData?.data}></AboutProfile>
+        )}
+        {activeTab === 3 && (
+          <EditProfile profileData={profileData?.data}></EditProfile>
+        )}
         {/* {activeTab === 4 && <EditDetails profileData={profileData?.data}></EditDetails>} */}
       </div>
     </div>

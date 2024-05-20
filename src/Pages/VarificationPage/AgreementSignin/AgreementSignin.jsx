@@ -16,6 +16,7 @@ const AgreementSignin = () => {
   const [selectedNidBack, setSelectedNidBack] = useState(null);
   const [selectedNoticeImage, setSelectedNoticeImage] = useState(null);
   const [selectedDashboardImage, setSelectedDashboardImage] = useState(null);
+  const [loading, setLoading] = useState(false);
   const id = localStorage.getItem("user_id");
   const navigate = useNavigate();
   const formData = new FormData();
@@ -121,7 +122,8 @@ const AgreementSignin = () => {
       formData.append("copyrightNoticeImage", labelImages?.selectedNoticeImage);
     }
     formData.append("data", JSON.stringify(data));
-    // console.log(profileImages, "profileImages");
+
+    setLoading(true);
     try {
       const response = await axios.patch(
         `${BASEURL}/user/verify-profile/${id}`,
@@ -152,6 +154,8 @@ const AgreementSignin = () => {
       console.log(error.response.data);
       toast.error(`${error.response.data.message}`);
       throw new Error(error.response.data.message);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -280,13 +284,18 @@ const AgreementSignin = () => {
       </div>
 
       <div className="button mt-5 flex items-center justify-end">
-        <button
-          onClick={handleAgreementDone}
-          className="btn bg-[#199332] btn-success text-white"
-          type="button"
-        >
-          Verify Now
-        </button>
+        {/* Conditionally render loader when loading state is true */}
+        {loading ? (
+          <div className="loader">Loading...</div>
+        ) : (
+          <button
+            onClick={handleAgreementDone}
+            className="btn bg-[#199332] btn-success text-white"
+            type="button"
+          >
+            Verify Now
+          </button>
+        )}
       </div>
     </div>
   );
