@@ -3,17 +3,16 @@ import axios from "axios";
 import BASEURL from "../../../Constants";
 import toast from "react-hot-toast";
 
-const ArtistEdit = ({item, refetch, setEditItemId}) => {
-  console.log(item);
+const ArtistEdit = ({ item, refetch, setEditItemId }) => {
   const [formData, setFormData] = useState({
     name: item?.primaryArtistName,
     instagramId: item?.primaryArtistYoutubeId,
     spotifyId: item?.primaryArtistSpotifyId,
     appleId: item?.primaryArtistAppleId,
     facebookUrl: item?.primaryArtistFacebookId,
-    profileImage: null, // Initialize profileImage as null
+    profileImage: null,
   });
-  // const id = localStorage.getItem("user_id");
+
   const handleFormSubmit = async (event) => {
     event.preventDefault();
     const formDataToSend = new FormData();
@@ -26,7 +25,6 @@ const ArtistEdit = ({item, refetch, setEditItemId}) => {
     const data = {
       user: localStorage.getItem("user_id"),
       primaryArtistName: formData.name,
-      // primaryArtistId,
       primaryArtistSpotifyId: formData.spotifyId,
       primaryArtistAppleId: formData.appleId,
       primaryArtistFacebookId: formData.facebookUrl,
@@ -44,8 +42,8 @@ const ArtistEdit = ({item, refetch, setEditItemId}) => {
       );
       console.log(response.data);
       toast.success(`${response.data.message}`);
-      setEditItemId(null)
-      refetch()
+      setEditItemId(null);
+      refetch();
       return response.data;
     } catch (error) {
       console.log(error.response.data);
@@ -62,9 +60,6 @@ const ArtistEdit = ({item, refetch, setEditItemId}) => {
     });
   };
 
- 
-
-  console.log(formData);
   return (
     <div className="">
       <form
@@ -90,7 +85,6 @@ const ArtistEdit = ({item, refetch, setEditItemId}) => {
             Instagram ID
           </label>
           <input
-            required
             type="text"
             name="instagramId"
             placeholder="Type here"
@@ -104,7 +98,6 @@ const ArtistEdit = ({item, refetch, setEditItemId}) => {
             Spotify ID
           </label>
           <input
-            required
             type="text"
             name="spotifyId"
             placeholder="Type here"
@@ -118,7 +111,6 @@ const ArtistEdit = ({item, refetch, setEditItemId}) => {
             Apple ID
           </label>
           <input
-            required
             type="text"
             name="appleId"
             placeholder="Type here"
@@ -132,7 +124,6 @@ const ArtistEdit = ({item, refetch, setEditItemId}) => {
             Facebook URL
           </label>
           <input
-            required
             type="text"
             name="facebookUrl"
             placeholder="Type here"

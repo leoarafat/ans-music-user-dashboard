@@ -1,22 +1,23 @@
 import React, { useState } from "react";
 import axios from "axios";
 import logo from "../../assets/logo/logo-main.png";
+import BASEURL from "../../../Constants";
+import toast from "react-hot-toast";
 
-const EditProfile = ({profileData}) => {
-  const [profileImage, setProfileImage] = useState(null);
-  const [govtIdImage, setGovtIdImage] = useState(null);
+const EditProfile = ({ profileData, refetch, isLoading }) => {
+  const [profileImage, setProfileImage] = useState(profileData?.image || null);
+  const id = localStorage.getItem("user_id");
   const [formData, setFormData] = useState({
-    name: profileData?.name,
-    address: profileData?.address,
-    email: profileData?.email,
-    phone: profileData?.phoneNumber,
-    country: profileData?.country,
-    state: profileData?.state,
-    city: profileData?.city,
-    postalCode: profileData?.postCode,
-    govtId: "",
+    name: profileData?.name || "",
+    address: profileData?.address || "",
+    email: profileData?.email || "",
+    phone: profileData?.phoneNumber || "",
+    country: profileData?.country || "",
+    state: profileData?.state || "",
+    city: profileData?.city || "",
+    postalCode: profileData?.postCode || "",
   });
-console.log(profileData);
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData({
@@ -27,46 +28,63 @@ console.log(profileData);
 
   const handleProfileImageChange = (e) => {
     const file = e.target.files[0];
-    setProfileImage(file);
-  };
-
-  const handleGovtIdImageChange = (e) => {
-    const file = e.target.files[0];
-    setGovtIdImage(file);
+    if (file) {
+      setProfileImage(URL.createObjectURL(file));
+      setFormData({
+        ...formData,
+        image: file,
+      });
+    }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    const data = new FormData();
-    data.append("profileImage", profileImage);
-    data.append("govtIdImage", govtIdImage);
-
-    for (let key in formData) {
-      data.append(key, formData[key]);
+    console.log(formData);
+    const formDataToSend = new FormData();
+    formDataToSend.append("data", JSON.stringify(formData));
+    if (formData.image) {
+      formDataToSend.append("image", formData.image);
     }
 
     try {
-      const response = await axios.post("YOUR_API_ENDPOINT", data, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
+      const response = await axios.patch(
+        `${BASEURL}/user/edit-profile/${id}`,
+        formDataToSend,
+        {
+          headers: {
+            Authorization: localStorage.getItem("token"),
+          },
+        }
+      );
+      toast.success(`${response.data.message}`, {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
       });
-      console.log(response.data);
-      // Handle success, e.g., show a success message to the user
+      refetch();
     } catch (error) {
       console.error("Error uploading data: ", error);
       // Handle error, e.g., show an error message to the user
     }
   };
 
+  if (isLoading) {
+    return <p>Loading...</p>;
+  }
+
   return (
     <div className="bg-white p-5 m-5 grid grid-cols-5 gap-5">
       <div className="profile-image col-span-1">
         <label htmlFor="profile-image-upload" className="cursor-pointer">
           <img
-            src={profileImage ? URL.createObjectURL(profileImage) : logo}
+            src={profileImage ? profileImage : logo}
             alt="Profile"
+            className="w-full h-auto rounded-lg shadow-md"
           />
           <input
             type="file"
@@ -111,7 +129,7 @@ console.log(profileData);
               Email
             </label>
             <input
-            readOnly
+              readOnly
               type="email"
               name="email"
               value={formData.email}
@@ -190,32 +208,15 @@ console.log(profileData);
               onChange={handleInputChange}
             />
           </div>
-          {/* <div className="w-full mt-5">
-            <label
-              htmlFor="govt-id-upload"
-              className="cursor-pointer gov-id-upload"
-            >
-              Govt. ID Upload
-              <input
-                type="file"
-                id="govt-id-upload"
-                accept="image/*"
-                style={{ display: "none" }}
-                onChange={handleGovtIdImageChange}
-              />
-            </label>
-            {govtIdImage && (
-              <img
-                src={URL.createObjectURL(govtIdImage)}
-                alt="Govt. ID"
-                className="mt-2"
-              />
-            )}
-          </div> */}
 
-          <button type="submit" className="profile-save-btn btn btn-outline btn-success">
-            Save
-          </button>
+          <div className="col-span-2 flex justify-end mt-5">
+            <button
+              type="submit"
+              className="profile-save-btn btn btn-outline btn-success"
+            >
+              Save
+            </button>
+          </div>
         </form>
       </div>
     </div>

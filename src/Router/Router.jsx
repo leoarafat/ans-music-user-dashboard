@@ -28,86 +28,130 @@ const router = createBrowserRouter([
   {
     path: "/",
     // element: <DashboardLayout></DashboardLayout>,
-    element: <PrivateRoute><DashboardLayout></DashboardLayout></PrivateRoute>,
+    element: (
+      <PrivateRoute>
+        <DashboardLayout></DashboardLayout>
+      </PrivateRoute>
+    ),
     errorElement: <Error></Error>,
     children: [
       {
         path: "/",
-        element: <VarificationRoute><DashBoard></DashBoard></VarificationRoute>,
+        element: (
+          <VarificationRoute>
+            <DashBoard></DashBoard>
+          </VarificationRoute>
+        ),
       },
       {
         path: "/upload",
-        element: <VarificationRoute><PrivateRoute><UploadMusic></UploadMusic></PrivateRoute></VarificationRoute>
+        element: (
+          <VarificationRoute>
+            <PrivateRoute>
+              <UploadMusic></UploadMusic>
+            </PrivateRoute>
+          </VarificationRoute>
+        ),
       },
       {
         path: "/manage",
-        element: <PrivateRoute><Manage></Manage></PrivateRoute>
+        element: (
+          <PrivateRoute>
+            <Manage></Manage>
+          </PrivateRoute>
+        ),
       },
       {
         path: "/financial",
-        element: <PrivateRoute><Financial></Financial></PrivateRoute>
+        element: (
+          <PrivateRoute>
+            <Financial></Financial>
+          </PrivateRoute>
+        ),
       },
       {
         path: "/analytics",
-        element: <PrivateRoute><Analytice></Analytice></PrivateRoute>
+        element: (
+          <PrivateRoute>
+            <Analytice></Analytice>
+          </PrivateRoute>
+        ),
       },
       {
         path: "/youtube-request",
-        element: <PrivateRoute><YoutubeRequest></YoutubeRequest></PrivateRoute>
+        element: (
+          <PrivateRoute>
+            <YoutubeRequest></YoutubeRequest>
+          </PrivateRoute>
+        ),
       },
       {
         path: "/legal",
-        element: <PrivateRoute><Legal></Legal></PrivateRoute>
+        element: (
+          <PrivateRoute>
+            <Legal></Legal>
+          </PrivateRoute>
+        ),
       },
       {
         path: "/help",
-        element: <PrivateRoute><Help></Help></PrivateRoute>
+        element: (
+          <PrivateRoute>
+            <Help></Help>
+          </PrivateRoute>
+        ),
       },
       {
         path: "/my-upload",
-        element: <PrivateRoute><MyUploadPage></MyUploadPage></PrivateRoute>
+        element: (
+          <PrivateRoute>
+            <MyUploadPage></MyUploadPage>
+          </PrivateRoute>
+        ),
       },
       {
         path: "/my-upload/:id",
-        element: <PrivateRoute><ViewDetails></ViewDetails></PrivateRoute>
+        element: (
+          <PrivateRoute>
+            <ViewDetails></ViewDetails>
+          </PrivateRoute>
+        ),
       },
       {
         path: "/my-upload/correction/:id",
-        element: <PrivateRoute><UploadEditDetails></UploadEditDetails></PrivateRoute>
+        element: (
+          <PrivateRoute>
+            <UploadEditDetails></UploadEditDetails>
+          </PrivateRoute>
+        ),
       },
       {
         path: "/profile",
-        element: <PrivateRoute><MyProfile></MyProfile></PrivateRoute>
+        element: (
+          <PrivateRoute>
+            <MyProfile></MyProfile>
+          </PrivateRoute>
+        ),
       },
       {
         path: "/profile-verification",
-        element: <PrivateRoute><VarificationPage></VarificationPage></PrivateRoute>
+        element: (
+          <PrivateRoute>
+            <VarificationPage></VarificationPage>
+          </PrivateRoute>
+        ),
       },
       {
         path: "/settings",
-        element: <PrivateRoute><Setting></Setting></PrivateRoute>
+        element: (
+          <PrivateRoute>
+            <Setting></Setting>
+          </PrivateRoute>
+        ),
       },
     ],
   },
-  // {
-  //   path: "/booking",
-  //   element: <PrivateRoute><BookingLayout></BookingLayout></PrivateRoute>,
-  //   children: [
-  //     {
-  //       path: "/booking",
-  //       element: <RecentBookings></RecentBookings>
-  //     },
-  //     {
-  //       path: "/booking/complete",
-  //       element: <BookingComplete></BookingComplete>
-  //     },
-  //     {
-  //       path: "/booking/all",
-  //       element: <AllOrder></AllOrder>
-  //     },
 
-  //   ]
-  // },
   {
     path: "/login",
     element: <SignIn></SignIn>,
@@ -122,7 +166,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/forgot-password",
-    element: <ForgetPassword></ForgetPassword>
+    element: <ForgetPassword></ForgetPassword>,
   },
 ]);
 

@@ -247,6 +247,7 @@ const InputUpload = ({ setActiveTab }) => {
               <label className="label gap-2 cursor-pointer">
                 <span className="label-text">Music</span>
                 <input
+                  required
                   defaultChecked={"music" == uploadInfo?.radio_1}
                   type="radio"
                   value={"music"}
@@ -257,6 +258,7 @@ const InputUpload = ({ setActiveTab }) => {
               <label className="label gap-2 cursor-pointer">
                 <span className="label-text">Classical Music</span>
                 <input
+                  required
                   defaultChecked={"classic-music" == uploadInfo?.radio_1}
                   type="radio"
                   name="radio_1"
@@ -267,6 +269,7 @@ const InputUpload = ({ setActiveTab }) => {
               <label className="label gap-2 cursor-pointer">
                 <span className="label-text">Jazz Music</span>
                 <input
+                  required
                   defaultChecked={"jazz-music" == uploadInfo?.radio_1}
                   type="radio"
                   value={"jazz-music"}
@@ -284,6 +287,7 @@ const InputUpload = ({ setActiveTab }) => {
               <label className="label gap-2 cursor-pointer">
                 <span className="label-text">Yes</span>
                 <input
+                  required
                   defaultChecked={"yes" == uploadInfo?.radio_2}
                   type="radio"
                   value={"yes"}
@@ -294,6 +298,7 @@ const InputUpload = ({ setActiveTab }) => {
               <label className="label gap-2 cursor-pointer">
                 <span className="label-text">NO</span>
                 <input
+                  required
                   defaultChecked={"no" == uploadInfo?.radio_2}
                   type="radio"
                   value={"no"}
@@ -494,7 +499,7 @@ const InputUpload = ({ setActiveTab }) => {
             {!showModal && (
               <label className="label">
                 <span className="label-text font-semibold">
-                  Primary Artist{" "}
+                  Primary Artist <span className="text-red-500">*</span>
                 </span>
                 <button
                   className="font-bold text-green-600 ml-4"
@@ -515,12 +520,12 @@ const InputUpload = ({ setActiveTab }) => {
           </div>
           <div className="grid grid-cols-2 gap-3">
             {selects.map((select, index) => (
-              <div key={select.id} className="relative">
+              <div key={index} className="relative">
                 <select
                   required
                   className="select select-sm w-full rounded h-9 shadow bg-[#dddddd1e]"
                   onChange={(event) => handleSelectChange(index, event)}
-                  value={select.selectedOption}
+                  // value={select.selectedOption}
                 >
                   <option selected disabled>
                     Select primary artist
@@ -714,15 +719,18 @@ const InputUpload = ({ setActiveTab }) => {
       <div className="input_fild grid grid-cols-2 gap-3 mt-3">
         <div className="form-control">
           <label className="label">
-            <span className="label-text font-semibold">Genre </span>
+            <span className="label-text font-semibold">
+              Genre <span className="text-red-500">*</span>
+            </span>
           </label>
           <select
             className="select select-sm  w-full rounded h-9 shadow bg-[#dddddd1e]"
             name="world"
           >
             <option disabled selected>
-              World
+              Select Genre
             </option>
+            <option value={"world"}>World</option>
             <option value={"han solo"}>Han Solo</option>
             <option value={"greedo"}>Greedo</option>
           </select>
@@ -735,7 +743,6 @@ const InputUpload = ({ setActiveTab }) => {
           </label>
           <input
             defaultValue={uploadInfo?.upc_ean}
-            required
             type="text"
             name="upc_ean"
             placeholder="UPC/EAN"
@@ -767,7 +774,6 @@ const InputUpload = ({ setActiveTab }) => {
           </label>
           <input
             defaultValue={uploadInfo?.producer_catalouge_number}
-            required
             type="text"
             placeholder="TEEC3012"
             name="producer_catalouge_number"
@@ -776,14 +782,16 @@ const InputUpload = ({ setActiveTab }) => {
         </div>
         <div className="form-control">
           <label className="label">
-            <span className="label-text font-semibold">Production year *</span>
+            <span className="label-text font-semibold">
+              Production year <span className="text-red-500">*</span>
+            </span>
           </label>
           <select
             className="select select-sm  w-full rounded h-9 shadow bg-[#dddddd1e]"
             name="production_year"
           >
             <option disabled selected>
-              2024
+              Select Production Year
             </option>
             <option value={"2021"}>2021</option>
             <option value={"2022"}>2022</option>
@@ -798,7 +806,9 @@ const InputUpload = ({ setActiveTab }) => {
             <>
               {" "}
               <label className="label">
-                <span className="label-text font-semibold">Label Name *</span>
+                <span className="label-text font-semibold">
+                  Label Name <span className="text-red-500">*</span>
+                </span>
                 <button
                   className="font-semibold text-green-600"
                   onClick={handleShowLabelModal}
@@ -807,10 +817,11 @@ const InputUpload = ({ setActiveTab }) => {
                 </button>
               </label>
               <select
+                required
                 className="select select-sm w-full rounded h-9 shadow bg-[#dddddd1e]"
                 name="label_name"
               >
-                <option value="">Select Label</option>
+                <option disabled>Select Label</option>
 
                 {showLabelList?.data?.map((item, i) => (
                   <option key={i} value={item?._id}>

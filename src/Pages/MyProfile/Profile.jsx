@@ -1,15 +1,18 @@
 import { useState } from "react";
-import logo from "../../assets/logo/logo-main.png";
 import axios from "axios";
-import BASEURL from "../../../Constants";
 import toast from "react-hot-toast";
-const Profile = ({ profileData }) => {
+import BASEURL from "../../../Constants";
+import logo from "../../assets/logo/logo-main.png";
+
+const Profile = ({ profileData, refetch, isLoading }) => {
   const [formData, setFormData] = useState({
-    name: profileData?.name,
-    email: profileData?.email,
-    address: profileData?.address,
-    phoneNumber: profileData?.phoneNumber,
+    name: profileData?.name || "",
+    address: profileData?.address || "",
+    phoneNumber: profileData?.phoneNumber || "",
+    image: profileData?.image || "",
   });
+
+  const [profileImage, setProfileImage] = useState(profileData?.image || null);
   const id = localStorage.getItem("user_id");
 
   const handleInputChange = (e) => {
@@ -21,10 +24,14 @@ const Profile = ({ profileData }) => {
   };
 
   const handleImageChange = (e) => {
-    setFormData({
-      ...formData,
-      profileImage: e.target.files[0],
-    });
+    const file = e.target.files[0];
+    if (file) {
+      setFormData({
+        ...formData,
+        image: file,
+      });
+      setProfileImage(URL.createObjectURL(file));
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -33,13 +40,12 @@ const Profile = ({ profileData }) => {
 
     const data = {
       name: formData?.name,
-      email: formData?.email,
       phoneNumber: formData?.phoneNumber,
       address: formData?.address,
     };
     formDataToSend.append("data", JSON.stringify(data));
-    if (formData.profileImage) {
-      formDataToSend.append("image", formData.profileImage);
+    if (formData.image) {
+      formDataToSend.append("image", formData.image);
     }
     try {
       const response = await axios.patch(
@@ -47,8 +53,6 @@ const Profile = ({ profileData }) => {
         formDataToSend,
         {
           headers: {
-            // Accept: "application/json",
-            // "Content-Type": "application/json",
             Authorization: localStorage.getItem("token"),
           },
         }
@@ -63,7 +67,7 @@ const Profile = ({ profileData }) => {
         progress: undefined,
         theme: "light",
       });
-      console.log(response.data);
+      refetch();
       return response.data;
     } catch (error) {
       toast.error(`${error.response.data.message}`, {
@@ -77,22 +81,21 @@ const Profile = ({ profileData }) => {
         theme: "light",
       });
 
-      console.log(error.response.data);
+      console.error(error.response.data);
       throw new Error(error.response.data.message);
     }
   };
-  console.log(formData);
+  if (isLoading) {
+    return <p>Loading...</p>;
+  }
   return (
     <div className="bg-white p-5 m-5 grid grid-cols-5 gap-5">
       <div className="profile-image col-span-1">
         <label htmlFor="profile-image-upload" className="cursor-pointer">
           <img
-            src={
-              formData?.profileImage
-                ? URL.createObjectURL(formData?.profileImage)
-                : logo
-            }
+            src={profileImage ? profileImage : logo}
             alt="Profile"
+            className="w-full h-auto rounded-lg shadow-md"
           />
           <input
             type="file"
@@ -112,25 +115,13 @@ const Profile = ({ profileData }) => {
             <input
               type="text"
               name="name"
-              value={formData?.name}
+              value={formData.name}
               placeholder="Type here"
               className="input input-bordered w-full"
               onChange={handleInputChange}
             />
           </div>
-          <div className="w-full">
-            <label className="me-5" htmlFor="your_email">
-              Email
-            </label>
-            <input
-              type="email"
-              name="email"
-              value={formData?.email}
-              placeholder="Type here"
-              className="input input-bordered w-full"
-              onChange={handleInputChange}
-            />
-          </div>
+
           <div className="w-full">
             <label className="me-5" htmlFor="your_address">
               Address
@@ -138,7 +129,7 @@ const Profile = ({ profileData }) => {
             <input
               type="text"
               name="address"
-              value={formData?.address}
+              value={formData.address}
               placeholder="Type here"
               className="input input-bordered w-full"
               onChange={handleInputChange}
@@ -151,19 +142,17 @@ const Profile = ({ profileData }) => {
             <input
               type="tel"
               name="phoneNumber"
-              value={formData?.phoneNumber}
+              value={formData.phoneNumber}
               placeholder="Type here"
               className="input input-bordered w-full"
               onChange={handleInputChange}
             />
           </div>
-
-          <button
-            type="submit"
-            className="profile-save-btn  btn btn-outline btn-success"
-          >
-            Save
-          </button>
+          <div className="col-span-2 flex justify-end">
+            <button type="submit" className="btn btn-outline btn-success">
+              Save
+            </button>
+          </div>
         </form>
       </div>
     </div>

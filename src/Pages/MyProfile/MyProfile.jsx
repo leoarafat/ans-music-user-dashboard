@@ -15,7 +15,11 @@ const MyProfile = () => {
   const id = localStorage.getItem("user_id");
 
   // <<<<<<<<< Profile info Data Recived >>>>>>>>>>
-  const { data: profileData = [], isLoading } = useQuery({
+  const {
+    data: profileData = [],
+    isLoading,
+    refetch,
+  } = useQuery({
     queryKey: ["profileData"],
     queryFn: async () => {
       try {
@@ -83,28 +87,29 @@ const MyProfile = () => {
             </span>
             <span>Edit Profile</span>
           </button>
-          {/* <button
-            className={`px-8 py-4 text-sm flex items-center justify-center gap-2  ${
-              activeTab === 4
-                ? " text-[#199332] tab_step_bg font-bold"
-                : "text-gray-500 font-semibold"
-            }`}
-            onClick={() => handleTabChange(4)}
-          >
-            <span className="text-xl">
-              <IoMusicalNotesOutline />
-            </span>
-            <span>Edit Details</span>
-          </button> */}
         </div>
       </div>
       <div className="">
-        {activeTab === 1 && <Profile profileData={profileData?.data}></Profile>}
+        {activeTab === 1 && (
+          <Profile
+            profileData={profileData?.data}
+            isLoading={isLoading}
+            refetch={refetch}
+          ></Profile>
+        )}
         {activeTab === 2 && (
-          <AboutProfile profileData={profileData?.data}></AboutProfile>
+          <AboutProfile
+            profileData={profileData?.data}
+            isLoading={isLoading}
+            refetch={refetch}
+          ></AboutProfile>
         )}
         {activeTab === 3 && (
-          <EditProfile profileData={profileData?.data}></EditProfile>
+          <EditProfile
+            profileData={profileData?.data}
+            isLoading={isLoading}
+            refetch={refetch}
+          ></EditProfile>
         )}
         {/* {activeTab === 4 && <EditDetails profileData={profileData?.data}></EditDetails>} */}
       </div>
