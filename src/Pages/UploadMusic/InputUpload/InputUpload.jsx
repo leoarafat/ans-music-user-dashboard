@@ -1,15 +1,15 @@
-import React, { useContext, useState } from "react";
+import { useContext, useState } from "react";
 import { MdOutlineSkipNext } from "react-icons/md";
 import { RiSkipBackMiniLine } from "react-icons/ri";
 import { AuthContext } from "../../../context/AuthProvider";
 import BASEURL from "../../../../Constants";
 
-import { CirclesWithBar } from "react-loader-spinner";
 import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
-import AddArtist from "../../Manage/AddArtist";
+
 import Loader from "../../Shared/Loader/Loader";
 import CreateArtistBox from "./CreateArtistBox/CreateArtistBox";
+import CreateLabelBox from "./CreateLabel/CreateLabeBox";
 
 const InputUpload = ({ setActiveTab }) => {
   const { uploadInfo, setUploadInfo } = useContext(AuthContext);
@@ -19,9 +19,14 @@ const InputUpload = ({ setActiveTab }) => {
   const [producers, setProducers] = useState([""]);
   const [selects, setSelects] = useState([""]);
   const [showModal, setShowModal] = useState(false);
+  const [showLabelModal, setShowLabelModal] = useState(false);
 
   // <<<<<<<<< Profile info Data Recived >>>>>>>>>>
-  const { data: showArtistList = [], isLoading, refetch } = useQuery({
+  const {
+    data: showArtistList = [],
+    isLoading,
+    refetch,
+  } = useQuery({
     queryKey: ["showArtistList"],
     queryFn: async () => {
       try {
@@ -34,14 +39,18 @@ const InputUpload = ({ setActiveTab }) => {
         });
         return response.data;
       } catch (error) {
-        setAuthenticated(error?.response?.data?.message);
+        // setAuthenticated(error?.response?.data?.message);
         console.log("Respons:", error?.response?.data?.message);
         throw error;
       }
     },
   });
   // <<<<<<<<< Profile info Data Recived >>>>>>>>>>
-  const { data: showLabelList = [] } = useQuery({
+  const {
+    data: showLabelList = [],
+    refetch: labelRefetch,
+    isLoading: labelLoading,
+  } = useQuery({
     queryKey: ["showLabelList"],
     queryFn: async () => {
       try {
@@ -54,7 +63,6 @@ const InputUpload = ({ setActiveTab }) => {
         });
         return response.data;
       } catch (error) {
-        setAuthenticated(error?.response?.data?.message);
         console.log("Respons:", error?.response?.data?.message);
         throw error;
       }
@@ -65,7 +73,7 @@ const InputUpload = ({ setActiveTab }) => {
     const newSelects = [...selects, ""];
     setSelects(newSelects);
   };
-  console.log(selects);
+
   const deleteSelect = (index) => {
     const newSelects = [...selects];
     newSelects.splice(index, 1);
@@ -215,7 +223,9 @@ const InputUpload = ({ setActiveTab }) => {
   if (isLoading) {
     return <Loader></Loader>;
   }
-  console.log(uploadInfo);
+  const handleShowLabelModal = () => {
+    setShowLabelModal(true);
+  };
   return (
     <form className="bg-white rounded-md p-4" onSubmit={handleSubmitUpload}>
       <h4 className="font-semibold text-xl capitalize my-3 ">
@@ -496,7 +506,11 @@ const InputUpload = ({ setActiveTab }) => {
             )}
 
             {showModal && (
-              <CreateArtistBox setShowModal={setShowModal} refetch={refetch}></CreateArtistBox>
+              <CreateArtistBox
+                setShowModal={setShowModal}
+                refetch={refetch}
+                isLoading={isLoading}
+              ></CreateArtistBox>
             )}
           </div>
           <div className="grid grid-cols-2 gap-3">
@@ -508,10 +522,9 @@ const InputUpload = ({ setActiveTab }) => {
                   onChange={(event) => handleSelectChange(index, event)}
                   value={select.selectedOption}
                 >
-                    <option selected disabled >
-                      
-                        Select primary artist
-                      </option>
+                  <option selected disabled>
+                    Select primary artist
+                  </option>
                   {showArtistList?.data?.map((item, nameIndex) => {
                     return (
                       <option key={nameIndex} value={item?._id}>
@@ -779,27 +792,41 @@ const InputUpload = ({ setActiveTab }) => {
             <option value={"2025"}>2025</option>
           </select>
         </div>
+
         <div className="form-control">
-          <label className="label">
-            <span className="label-text font-semibold">Label Name *</span>
-          </label>
-          <select
-            className="select select-sm  w-full rounded h-9 shadow bg-[#dddddd1e]"
-            name="label_name"
-          >
-            {/* <option disabled selected>
-              Select Label
-            </option> */}
-            {showLabelList?.data?.map((item, i) => {
-              return (
-                <option key={i} value={item?._id}>
-                  {item?.labelName}
-                </option>
-              );
-            })}
-            {/* <option value={"Han Solo"}>Han Solo</option>
-            <option value={"Greedo"}>Greedo</option> */}
-          </select>
+          {!showLabelModal && (
+            <>
+              {" "}
+              <label className="label">
+                <span className="label-text font-semibold">Label Name *</span>
+                <button
+                  className="font-semibold text-green-600"
+                  onClick={handleShowLabelModal}
+                >
+                  Create Label
+                </button>
+              </label>
+              <select
+                className="select select-sm w-full rounded h-9 shadow bg-[#dddddd1e]"
+                name="label_name"
+              >
+                <option value="">Select Label</option>
+
+                {showLabelList?.data?.map((item, i) => (
+                  <option key={i} value={item?._id}>
+                    {item?.labelName}
+                  </option>
+                ))}
+              </select>
+            </>
+          )}
+          {showLabelModal && (
+            <CreateLabelBox
+              setShowLabelModal={setShowLabelModal}
+              refetch={labelRefetch}
+              isLoading={labelLoading}
+            ></CreateLabelBox>
+          )}
         </div>
         <div className="form-control">
           <label className="label">

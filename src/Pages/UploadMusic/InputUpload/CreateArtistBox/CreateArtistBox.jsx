@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
 import BASEURL from "../../../../../Constants";
 
-const CreateArtistBox = ({ setShowModal, refetch }) => {
+const CreateArtistBox = ({ setShowModal, refetch, isLoading }) => {
   const [formData, setFormData] = useState({
     name: "",
     instagramId: "",
@@ -30,7 +30,7 @@ const CreateArtistBox = ({ setShowModal, refetch }) => {
       primaryArtistFacebookId: formData.facebookUrl,
       primaryArtistYoutubeId: formData.instagramId,
     };
-// console.log(data);
+    // console.log(data);
     try {
       const response = await axios.post(`${BASEURL}/manage/add-artist`, data, {
         headers: {
@@ -39,7 +39,7 @@ const CreateArtistBox = ({ setShowModal, refetch }) => {
       });
       console.log(response.data);
       toast.success(`${response.data.message}`);
-      refetch()
+      refetch();
       setShowModal(false);
       return response.data;
     } catch (error) {
@@ -54,16 +54,17 @@ const CreateArtistBox = ({ setShowModal, refetch }) => {
       <div className="grid grid-cols-2 gap-5 bg-green-50 p-4">
         <div className="w-full">
           <label className="me-5" htmlFor="your_name">
-            Name
+            Name <span className="text-red-500">*</span>
           </label>
+
           <input
             required
             type="text"
             name="name"
             value={formData.name}
             onChange={handleInputChange}
-            placeholder="Type here"
-            className="input input-bordered w-full"
+            placeholder="Enter Name"
+            className="input input-bordered h-10 w-full"
           />
         </div>
         <div className="w-full">
@@ -76,8 +77,8 @@ const CreateArtistBox = ({ setShowModal, refetch }) => {
             name="instagramId"
             value={formData.instagramId}
             onChange={handleInputChange}
-            placeholder="Type here"
-            className="input input-bordered w-full"
+            placeholder="Optional"
+            className="input input-bordered h-10 w-full"
           />
         </div>
         <div className="w-full">
@@ -90,8 +91,8 @@ const CreateArtistBox = ({ setShowModal, refetch }) => {
             name="spotifyId"
             value={formData.spotifyId}
             onChange={handleInputChange}
-            placeholder="Type here"
-            className="input input-bordered w-full"
+            placeholder="Optional"
+            className="input input-bordered h-10 w-full"
           />
         </div>
         <div className="w-full">
@@ -104,8 +105,8 @@ const CreateArtistBox = ({ setShowModal, refetch }) => {
             name="appleId"
             value={formData.appleId}
             onChange={handleInputChange}
-            placeholder="Type here"
-            className="input input-bordered w-full"
+            placeholder="Optional"
+            className="input input-bordered h-10 w-full"
           />
         </div>
         <div className="w-full">
@@ -113,30 +114,29 @@ const CreateArtistBox = ({ setShowModal, refetch }) => {
             Facebook URL
           </label>
           <input
-            required
             type="text"
             name="facebookUrl"
             value={formData.facebookUrl}
             onChange={handleInputChange}
-            placeholder="Type here"
-            className="input input-bordered w-full"
+            placeholder="Optional"
+            className="input input-bordered h-10 w-full"
           />
         </div>
 
-        <div className="flex items-center gap-5">
+        <div className="flex items-center gap-5 mt-6">
           <button
             onClick={() => setShowModal(false)}
             type="button"
-            className="profile-save-btn  btn  btn-outline btn-success"
+            className="inline-flex justify-center px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-100"
           >
             Close
           </button>
           <button
             onClick={handleFormSubmit}
             type="button"
-            className="profile-save-btn  btn btn-outline btn-success"
+            className="inline-flex justify-center ml-3 px-4 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-100"
           >
-            Save
+            {isLoading ? "Saving.." : "Save"}
           </button>
         </div>
       </div>
